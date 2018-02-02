@@ -59,6 +59,11 @@ tar -xzvf exercism-linux-64bit.tgz
 cd ~/workspace
 git clone https://github.com/jschomay/clojure-exercism
 
+# setup joker
+cd ~/bin
+wget https://github.com/candid82/joker/releases/download/v0.8.8/joker-0.8.8-linux-amd64.zip
+unzip joker-0.8.8-linux-amd64.zip
+
 # give jeff access
 echo /tmp/jeff_key.pub >> ~/.ssh/authorized_keys
 
