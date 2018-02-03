@@ -7,9 +7,9 @@ resource "aws_key_pair" "mleger" {
   public_key = "${file("~/.ssh/id_rsa.pub")}"
 }
 
-resource "aws_security_group" "allow_ssh" {
-  name        = "allow_ssh"
-  description = "Allow ssh connections on port 22"
+resource "aws_security_group" "clojure_wang" {
+  name        = "clojure_wang"
+  description = "Allow ssh connections on port 22 and open up egrees"
 
   ingress {
     from_port   = 22
@@ -26,11 +26,11 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
-resource "aws_instance" "clojure-club" {
+resource "aws_instance" "clojure_wang" {
   ami                    = "ami-1ee65166"
   instance_type          = "t2.micro"
   key_name               = "${aws_key_pair.mleger.id}"
-  vpc_security_group_ids = ["${aws_security_group.allow_ssh.id}"]
+  vpc_security_group_ids = ["${aws_security_group.clojure_wang.id}"]
 
   provisioner "file" {
     source      = "~/.tmux.conf"
@@ -88,7 +88,7 @@ resource "aws_instance" "clojure-club" {
 }
 
 resource "aws_eip" "ip" {
-  instance = "${aws_instance.clojure-club.id}"
+  instance = "${aws_instance.clojure_wang.id}"
 }
 
 output "ip" {

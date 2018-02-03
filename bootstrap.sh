@@ -5,7 +5,7 @@ set -x -e
 # Install dependencies
 sudo add-apt-repository ppa:neovim-ppa/stable -y
 sudo apt-get update
-sudo apt-get install vim neovim tmux git python -y
+sudo apt-get install vim neovim tmux git python unzip -y
 
 # Setup workspace dir
 mkdir ~/workspace && cd $_
@@ -26,7 +26,7 @@ source ~/jeff/.vimrc
 git clone https://github.com/jschomay/.vim.git ~/jeff/.vim
 ln -s ~/jeff/.vim/vimrc ~/jeff/.vimrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-sed -i.tmp 's:colorscheme base16-tomorrow-night:try | colorscheme base16-tomorrow-night | catch | endtry:g' ~/jeff/.vimrc
+sed -i.tmp 's:colorscheme \(.*\):try | colorscheme \1 | catch | endtry:g' ~/jeff/.vimrc
 nvim +PluginInstall +qall
 
 # add some local stuff to my vim config
