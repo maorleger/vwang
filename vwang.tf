@@ -33,41 +33,19 @@ resource "aws_instance" "clojure_wang" {
   vpc_security_group_ids = ["${aws_security_group.clojure_wang.id}"]
 
   provisioner "file" {
-    source      = "~/.tmux.conf"
-    destination = "~/.tmux.conf"
-
-    connection {
-      type    = "ssh"
-      user    = "ubuntu"
-      timeout = "1m"
-    }
-  }
-
-  provisioner "file" {
-    source      = "~/.vimrc_local"
-    destination = "~/.vimrc_local"
-
-    connection {
-      type    = "ssh"
-      user    = "ubuntu"
-      timeout = "1m"
-    }
-  }
-
-  provisioner "file" {
-    source      = "~/.vimrc.bundles.local"
-    destination = "~/.vimrc.bundles.local"
-
-    connection {
-      type    = "ssh"
-      user    = "ubuntu"
-      timeout = "1m"
-    }
-  }
-
-  provisioner "file" {
     source      = "jeff_key.pub"
     destination = "/tmp/jeff_key.pub"
+
+    connection {
+      type    = "ssh"
+      user    = "ubuntu"
+      timeout = "1m"
+    }
+  }
+
+  provisioner "file" {
+    source      = "jeff.exercism"
+    destination = "/tmp/jeff.exercism"
 
     connection {
       type    = "ssh"
@@ -91,6 +69,6 @@ resource "aws_eip" "ip" {
   instance = "${aws_instance.clojure_wang.id}"
 }
 
-output "ip" {
+output "ssh" {
   value = "ssh ubuntu@${aws_eip.ip.public_ip}"
 }
