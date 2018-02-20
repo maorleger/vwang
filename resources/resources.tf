@@ -55,6 +55,6 @@ resource "aws_eip" "ip" {
   instance = "${aws_instance.workstation-ec2.id}"
 }
 
-output "ssh" {
-  value = "ssh ubuntu@${aws_eip.ip.public_ip}"
+output "public_ip" {
+  value = "${aws_eip.ip.public_ip}"
 }

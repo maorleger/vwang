@@ -15,3 +15,7 @@ module "resources" {
   environment = "personal-station"
   script-path = "init.sh"
 }
+
+output "public_ip" {
+  value = "${module.resources.public_ip}"
+}
