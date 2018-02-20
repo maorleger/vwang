@@ -40,10 +40,6 @@ resource "aws_instance" "clojure_wang" {
   key_name               = "${aws_key_pair.mleger.id}"
   vpc_security_group_ids = ["${aws_security_group.clojure_wang.id}"]
 
-  tags {
-    Name = "clojure_wang"
-  }
-
   provisioner "file" {
     source      = "jeff_key.pub"
     destination = "/tmp/jeff_key.pub"
