@@ -10,8 +10,8 @@ terraform {
   }
 }
 
-resource "aws_key_pair" "mleger" {
-  key_name   = "mleger-key"
+resource "aws_key_pair" "key-pair" {
+  key_name   = "mleger-clojure-key"
   public_key = "${file("~/.ssh/id_rsa.pub")}"
 }
 
@@ -37,8 +37,12 @@ resource "aws_security_group" "clojure_wang" {
 resource "aws_instance" "clojure_wang" {
   ami                    = "ami-1ee65166"
   instance_type          = "t2.micro"
-  key_name               = "${aws_key_pair.mleger.id}"
+  key_name               = "${aws_key_pair.key-pair.id}"
   vpc_security_group_ids = ["${aws_security_group.clojure_wang.id}"]
+
+  tags {
+    Name = "clojure_wang"
+  }
 
   provisioner "file" {
     source      = "jeff_key.pub"

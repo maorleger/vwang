@@ -40,6 +40,10 @@ resource "aws_instance" "workstation-ec2" {
   key_name               = "${aws_key_pair.mleger.id}"
   vpc_security_group_ids = ["${aws_security_group.security-group.id}"]
 
+  tags {
+    Name = "${var.environment}"
+  }
+
   provisioner "remote-exec" {
     script = "${var.script-path}"
 
