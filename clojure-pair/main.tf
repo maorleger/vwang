@@ -5,23 +5,24 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "terraform-mleger"
-    key    = "personal-station"
+    key    = "clojure-pair"
     region = "us-west-2"
   }
 }
 
 module "resources" {
   source      = "../resources"
-  environment = "personal-station"
+  environment = "clojure-pair"
 
   workstation-scripts = [
     "../scripts/personal-station.sh",
     "../scripts/clojure.sh",
     "../scripts/exercism.sh",
+    "../scripts/jeff-pairing-station.sh",
   ]
 }
 
-resource "null_resource" "exercism-key" {
+resource "null_resource" "pairing-keys" {
   triggers {
     aws_instance = "${module.resources.public_ip}"
   }
@@ -38,9 +39,22 @@ resource "null_resource" "exercism-key" {
     }
   }
 
+  provisioner "file" {
+    source      = "jeff_key.pub"
+    destination = "/tmp/jeff_key.pub"
+
+    connection {
+      type    = "ssh"
+      user    = "ubuntu"
+      timeout = "1m"
+      host    = "${module.resources.public_ip}"
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
       "~/bin/exercism configure --key $(cat /tmp/key.exercism)",
+      "cat /tmp/jeff_key.pub >> ~/.ssh/authorized_keys",
     ]
 
     connection {

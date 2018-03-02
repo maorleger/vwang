@@ -25,6 +25,7 @@ git clone https://github.com/braintreeps/vim_dotfiles
 cd vim_dotfiles
 ./activate.sh
 
+# TODO
 # setup jeff's vim
 mkdir -p ~/.config/nvim/
 echo "

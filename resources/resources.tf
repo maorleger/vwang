@@ -6,8 +6,9 @@ variable "environment" {
   type = "string"
 }
 
-variable "script-path" {
-  type = "string"
+variable "workstation-scripts" {
+  type    = "list"
+  default = []
 }
 
 resource "aws_key_pair" "mleger" {
@@ -45,7 +46,17 @@ resource "aws_instance" "workstation-ec2" {
   }
 
   provisioner "remote-exec" {
-    script = "${var.script-path}"
+    script = "${path.module}/init.sh"
+
+    connection {
+      type    = "ssh"
+      user    = "ubuntu"
+      timeout = "1m"
+    }
+  }
+
+  provisioner "remote-exec" {
+    scripts = "${var.workstation-scripts}"
 
     connection {
       type    = "ssh"
