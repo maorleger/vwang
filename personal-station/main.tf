@@ -18,6 +18,7 @@ module "resources" {
     "../scripts/personal-station.sh",
     "../scripts/clojure.sh",
     "../scripts/exercism.sh",
+    "../scripts/ruby.sh",
   ]
 }
 
