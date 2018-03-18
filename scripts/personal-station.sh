@@ -2,4 +2,7 @@
 
 set -x -e
 
-echo "nothing to do here yet"
+# pull down my exercism repo
+mkdir -p ~/workspace/exercism
+cd $_
+git clone https://github.com/maorleger/exercism .
