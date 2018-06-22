@@ -5,31 +5,30 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "terraform-mleger"
-    key    = "personal-station"
+    key    = "allcentury-pair"
     region = "us-west-2"
   }
 }
 
 module "resources" {
   source      = "../resources"
-  environment = "personal-station"
+  environment = "allcentury-pair"
 
   workstation-scripts = [
     "../scripts/personal-station.sh",
     "../scripts/docker.sh",
-    "../scripts/clojure.sh",
-    "../scripts/exercism.sh",
+    "../scripts/anthony-pairing-station.sh",
   ]
 }
 
-resource "null_resource" "exercism-key" {
+resource "null_resource" "pairing-keys" {
   triggers {
     aws_instance = "${module.resources.public_ip}"
   }
 
   provisioner "file" {
-    source      = "key.exercism"
-    destination = "/tmp/key.exercism"
+    source      = "anthony_key.pub"
+    destination = "/tmp/anthony_key.pub"
 
     connection {
       type    = "ssh"
@@ -41,7 +40,7 @@ resource "null_resource" "exercism-key" {
 
   provisioner "remote-exec" {
     inline = [
-      "~/bin/exercism configure --key $(cat /tmp/key.exercism)",
+      "cat /tmp/anthony_key.pub >> ~/.ssh/authorized_keys",
     ]
 
     connection {
