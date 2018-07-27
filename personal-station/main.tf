@@ -17,7 +17,6 @@ module "resources" {
   workstation-scripts = [
     "../scripts/personal-station.sh",
     "../scripts/docker.sh",
-    "../scripts/clojure.sh",
     "../scripts/exercism.sh",
   ]
 }

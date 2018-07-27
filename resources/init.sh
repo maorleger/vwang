@@ -22,6 +22,7 @@ ln -s $CONFIG_DIR/maor_dotfiles/.lein .
 ln -s $CONFIG_DIR/maor_dotfiles/.tmux.conf .
 ln -s $CONFIG_DIR/maor_dotfiles/.vimrc.bundles.local .
 ln -s $CONFIG_DIR/maor_dotfiles/.vimrc_local .
+ln -s $CONFIG_DIR/maor_dotfiles/.gitconfig .
 
 # setup braintree's vim dotfiles
 cd $CONFIG_DIR
@@ -40,7 +41,7 @@ set noswapfile
 cd /tmp
 sudo apt-get install zsh -y
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh
-sed -i.tmp 's:env zsh::g' install.sh
+sed -i.tmp 's:env zsh -l::g' install.sh
 sed -i.tmp 's:chsh -s .*$::g' install.sh
 sh install.sh
 
@@ -55,3 +56,5 @@ mkdir -p ~/workspace && cd $_
 # setup gitconfig defaults
 git config --global core.editor "vim"
 git config --global push.default simple
+
+echo 'finished init script'
