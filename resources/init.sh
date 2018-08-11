@@ -57,4 +57,7 @@ mkdir -p ~/workspace && cd $_
 git config --global core.editor "vim"
 git config --global push.default simple
 
+# install tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 echo 'finished init script'
