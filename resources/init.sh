@@ -4,11 +4,25 @@ set -x -e
 
 CONFIG_DIR=~/.workstation_config
 
+# add nodejs and yarn repos
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
 # Install dependencies
 sudo add-apt-repository ppa:neovim-ppa/stable -y
 sudo add-apt-repository ppa:jonathonf/vim -y
 sudo apt-get update
-sudo apt-get install vim neovim tmux git python unzip -y
+sudo apt-get install -y \
+  vim \
+  neovim \
+  tmux \
+  git \
+  python \
+  unzip \
+  nodejs \
+  yarn
 
 # setup all directories that other scripts expect
 mkdir -p $CONFIG_DIR
