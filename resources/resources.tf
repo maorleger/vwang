@@ -53,7 +53,7 @@ resource "aws_security_group" "security-group" {
 
 resource "aws_instance" "workstation-ec2" {
   ami                    = "ami-1ee65166"
-  instance_type          = "t2.micro"
+  instance_type          = "t2.medium"
   key_name               = "${aws_key_pair.key-pair.id}"
   vpc_security_group_ids = ["${aws_security_group.security-group.id}"]
 
