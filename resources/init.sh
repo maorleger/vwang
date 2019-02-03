@@ -33,12 +33,9 @@ sudo apt-get install -y \
 mkdir -p $CONFIG_DIR
 mkdir -p ~/bin
 
-# download my dotfiles
+# download all dotfiles
 git clone https://github.com/maorleger/dotfiles $HOME/.dotfiles
-
-# setup braintree's vim dotfiles
 git clone https://github.com/braintreeps/vim_dotfiles $HOME/.vim
-$HOME/.vim/activate.sh
 
 # install zsh and oh-myzsh
 cd /tmp
@@ -52,18 +49,19 @@ sh install.sh
 cd ~
 rm -rf ~/.zshrc
 
-# Activate my dotfiles
+# Activate all dotfiles
 env RCRC=$HOME/.dotfiles/rcrc rcup
+$HOME/.vim/activate.sh
 
 # Add pairing specific vim config
 echo "
 set nobackup
 set nowb
 set noswapfile
-" >> ~/.vimrc_local
+" >> $HOME/.vimrc_local
 
 # Setup workspace dir
-mkdir -p ~/workspace && cd $_
+mkdir -p $HOME/workspace && cd $HOME/workspace
 
 # setup gitconfig defaults
 git config --global core.editor "vim"
