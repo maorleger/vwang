@@ -10,6 +10,10 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
+# install rcm
+wget -qO - https://apt.thoughtbot.com/thoughtbot.gpg.key | sudo apt-key add -
+echo "deb https://apt.thoughtbot.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/thoughtbot.list
+
 # Install dependencies
 sudo add-apt-repository ppa:neovim-ppa/stable -y
 sudo add-apt-repository ppa:jonathonf/vim -y
@@ -22,34 +26,19 @@ sudo apt-get install -y \
   python \
   unzip \
   nodejs \
-  yarn
+  yarn \
+  rcm
 
 # setup all directories that other scripts expect
 mkdir -p $CONFIG_DIR
 mkdir -p ~/bin
 
 # download my dotfiles
-cd $CONFIG_DIR
-git clone https://github.com/maorleger/dot_files $CONFIG_DIR/maor_dotfiles
-cd ~
-ln -s $CONFIG_DIR/maor_dotfiles/.lein .
-ln -s $CONFIG_DIR/maor_dotfiles/.tmux.conf .
-ln -s $CONFIG_DIR/maor_dotfiles/.vimrc.bundles.local .
-ln -s $CONFIG_DIR/maor_dotfiles/.vimrc_local .
-ln -s $CONFIG_DIR/maor_dotfiles/.gitconfig .
+git clone https://github.com/maorleger/dotfiles $HOME/.dotfiles
 
 # setup braintree's vim dotfiles
-cd $CONFIG_DIR
-git clone https://github.com/braintreeps/vim_dotfiles braintree_dotfiles
-cd braintree_dotfiles
-./activate.sh
-
-# Add pairing specific vim config
-echo "
-set nobackup
-set nowb
-set noswapfile
-" >> ~/.vimrc_local
+git clone https://github.com/braintreeps/vim_dotfiles $HOME/.vim
+$HOME/.vim/activate.sh
 
 # install zsh and oh-myzsh
 cd /tmp
@@ -62,7 +51,16 @@ sh install.sh
 # oh-my-zsh will move the current .zshrc to a pre version if it exists so I need to replace the symlink after the fact
 cd ~
 rm -rf ~/.zshrc
-ln -s $CONFIG_DIR/maor_dotfiles/.zshrc .
+
+# Activate my dotfiles
+env RCRC=$HOME/.dotfiles/rcrc rcup
+
+# Add pairing specific vim config
+echo "
+set nobackup
+set nowb
+set noswapfile
+" >> ~/.vimrc_local
 
 # Setup workspace dir
 mkdir -p ~/workspace && cd $_
